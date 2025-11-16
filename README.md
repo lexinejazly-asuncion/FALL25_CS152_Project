@@ -34,15 +34,15 @@ Make sure you are in the correct folder: 'FALL25_CS152_Project', if not run:
 
 This application runs on a virtual environment. 
 Create a virtual environment:
-**python3 -m venv venv**
+<br>**python3 -m venv venv**
 
 *Note: This only needs to be done the first time the project is set up.*
 
 Activate the virtual environment:
-**. venv/bin/activate**
+<br>**. venv/bin/activate**
 
 Install application dependencies and libraries:
-**pip install -r requirements.txt**
+<br>**pip install -r requirements.txt**
 
 After installing these dependencies run:
 <br>**python3**
@@ -53,7 +53,7 @@ After installing these dependencies run:
 <br>**exit()**
 
 For now, this application can only scape the university website for basic information about RSOs:
-**python3 main.py**
+<br>**python3 main.py**
 
 Deactivate virtual environment: 
 **deactivate**
