@@ -10,8 +10,7 @@ URL = "https://sammyapp.sjsu.edu/club_signup?view=all&c"
 response = requests.get(URL) #returns a response object
 soup = BeautifulSoup(response.text, "lxml") #creates a beautifulsoup object that stores the parsed HTML using lxml
 
-rsos = []
-
+#for lines that are scraped, removed redundant prefixes
 def clean_entries(line, prefix = None):
     line = " ".join(line.split())
     if prefix and line.startswith(prefix):
@@ -21,6 +20,8 @@ def clean_entries(line, prefix = None):
 
 
 def scrape():
+
+    rsos = []
     #selects all HTML elements with class = 'list-group-item', or the individual rso entries
     for rso in soup.select(".list-group-item"): 
         # scrape the information about the rso
