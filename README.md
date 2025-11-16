@@ -27,8 +27,10 @@ based on their interests, skills, and availability.
 
 ### How to run this application: Terminal Commands
 Create a local copy of the repository:
-**git clone https://github.com/lexinejazly-asuncion/FALL25_CS152_Project.git**
-**cd FALL25_CS152_Project**
+<br>**git clone https://github.com/lexinejazly-asuncion/FALL25_CS152_Project.git**
+
+Make sure you are in the correct folder: 'FALL25_CS152_Project', if not run:
+<br>**cd FALL25_CS152_Project**
 
 This application runs on a virtual environment. 
 Create a virtual environment:
@@ -42,9 +44,16 @@ Activate the virtual environment:
 Install application dependencies and libraries:
 **pip install -r requirements.txt**
 
+After installing these dependencies run:
+<br>**python3**
+<br>**import nltk**
+<br>**nltk.download('punkt')**
+<br>**nltk.download('averaged_perceptron_tagger_eng’)**
+<br>**nltk.download('wordnet')**
+<br>**exit()**
+
 For now, this application can only scape the university website for basic information about RSOs:
-**cd scrape**
-**python3 scrape_web.py**
+**python3 main.py**
 
 Deactivate virtual environment: 
 **deactivate**
