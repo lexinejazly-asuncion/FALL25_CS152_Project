@@ -1,29 +1,6 @@
-import pandas as pd
-import json
-
 import nltk
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
-
-#loads the club data from the json file
-def load_clubs(CLUB_PATH):
-    with open(CLUB_PATH, "r", encoding = "utf-8") as f:
-        clubs = json.load(f)
-
-    return clubs
-
-#initializes a dataframe from the loaded club data
-def json_to_dframe(clubs):
-    df = pd.DataFrame(clubs)
-
-    #create a new column 'tags' that concatenates the data from 'mission' and 'benefits'
-    df["mission_and_benefits"] = (df["mission"] + " " + df["benefits"]).str.strip()
-    
-    df = df[["name", "category", "mission_and_benefits"]] #selects columns 'name' and 'tags'
-
-    df = df.set_index("name") #set the name of club as the index
-
-    return df
 
 lemmatizer = WordNetLemmatizer() #reduces a word to its base form
 stop_words = set(stopwords.words('english')) #common english words 
@@ -39,7 +16,7 @@ def preprocess(text):
 
     temp_tokens = []
 
-    #ite
+    #iterate through each token
     for i, word in enumerate(words):
         tag = tags[i][1]
   
@@ -55,16 +32,16 @@ def preprocess(text):
             temp_tokens.append(lemmatized)
 
     #concatenate all tokens into one string
-    final_sent = " ".join(temp_tokens)
+    tokens = " ".join(temp_tokens)
 
-    final_sent = final_sent.replace("n't", " not")
-    final_sent = final_sent.replace("'m", " am")
-    final_sent = final_sent.replace("'s", " is")
-    final_sent = final_sent.replace("'re", " are")
-    final_sent = final_sent.replace("'ll", " will")
-    final_sent = final_sent.replace("'ve", " have")
-    final_sent = final_sent.replace("'d", " would")
+    tokens = tokens.replace("n't", " not")
+    tokens = tokens.replace("'m", " am")
+    tokens = tokens.replace("'s", " is")
+    tokens = tokens.replace("'re", " are")
+    tokens = tokens.replace("'ll", " will")
+    tokens = tokens.replace("'ve", " have")
+    tokens = tokens.replace("'d", " would")
 
-    return final_sent
+    return tokens
 
 

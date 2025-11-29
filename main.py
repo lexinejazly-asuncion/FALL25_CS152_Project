@@ -1,28 +1,38 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sentence_transformers import SentenceTransformer
+
 from scripts.scrape_web import scrape
-from scripts.load_and_process_data import load_clubs, json_to_dframe, preprocess
-from scripts.recommender import vectorize, compute_similarity, recommend
+from scripts.load import load_clubs, json_to_dframe
+from scripts.process import preprocess
+from scripts.recommender import recommend
 from config.paths import GENERATED_CONTENT_CLUB_PATH
 
 def main():
-    scrape() #scrape the website
+
+    print("1. Scraping website")
+    scrape() #call scrape method to get information about clubs
+
+    print("2. Loading into dframe")
     clubs = load_clubs(GENERATED_CONTENT_CLUB_PATH) #load the data scraped about clubs
     clubs_df = json_to_dframe(clubs) #create a dframe from the loaded data
-    print(clubs_df.head(10))
 
-    print()
+    print("3. Selecting keywords from club descriptions")
+    clubs_df["description_keywords"] = clubs_df["description"].apply(preprocess) #takes only important words from mission and benefits
+    club_indices = clubs_df.index.tolist()
 
-    clubs_df["keywords"] = clubs_df["mission_and_benefits"].apply(preprocess)
-    clubs_df = clubs_df[["category", "keywords"]] 
-    print(clubs_df.head(10))
+    print("4. Creating vector embeddings")
+    tfidf_vectorizer = TfidfVectorizer() #initialize a vector, where values are the result of td-idf
+    lexical_club_matrix = tfidf_vectorizer.fit_transform(clubs_df["description_keywords"]) #transforms text in 'description_keywords' into vectors, represents it lexically
 
-    tdidf_clubs = vectorize(clubs_df)
-    cosine_sim = compute_similarity(tdidf_clubs)
+    model = SentenceTransformer('all-mpnet-base-v2') #initiaze the Sentence Transformer model
+    semantic_club_matrix = model.encode(clubs_df["description_keywords"].tolist()) #transforms text in 'description_keywords' into vectors, represents it semantically
+    
+    user_input = input("What are you looking for? ")
 
-    example_club = clubs_df.index[10]  # just pick the first club
-    recommendations = recommend(clubs_df, example_club, cosine_sim, 15)
+    print("5. Searching for most relevant matches")
+    recommended_clubs = recommend(user_input, club_indices, model, tfidf_vectorizer, semantic_club_matrix, lexical_club_matrix, n=10)
 
-    print(f"\nTop recommendations for '{example_club}':")
-    print(recommendations)
+    print("Recommended clubs", recommended_clubs)
 
 
 

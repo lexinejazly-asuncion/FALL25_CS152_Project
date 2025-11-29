@@ -18,7 +18,6 @@ def clean_entries(line, prefix = None):
 
     return line
 
-
 def scrape():
 
     rsos = []
