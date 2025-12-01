@@ -52,7 +52,7 @@ After installing these dependencies run:
 <br>**nltk.download('wordnet')**
 <br>**exit()**
 
-For now, this application can only scape the university website for basic information about RSOs:
+For now, this application can only scrape the university website for basic information about RSOs:
 <br>**python3 main.py**
 
 Deactivate virtual environment: 
