@@ -28,7 +28,9 @@ def main():
     
     #ask for user query   
     #user_input = input("What are you looking for? ")
-    user_input = "I am interested in clubs that combine electrical engineering and computer science research"
+    user_input = "I want to join a club for business majors. I would like to have chances to " \
+    "network with professionals and also connect with alumni. If there is a possibility, " \
+    "I would also like to work on consulting projects."
 
     recommended_clubs = recommend(user_input, club_indices, n=20)
 
