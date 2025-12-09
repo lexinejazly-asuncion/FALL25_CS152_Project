@@ -1,0 +1,56 @@
+body {
+  background-color: rgb(187, 197, 255);
+  height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+/* Keep header separate, positioned up top */
+header {
+  position: absolute;
+  top: 40px;
+  left: 60px;
+}
+
+h1 {
+  color: rgb(104, 126, 251);
+  font-size: 40px;
+  margin: 0;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  padding-left: 30px;
+}
+
+/* Center ONLY the .Box in the viewport */
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.Box {
+  background-color: rgba(255, 247, 247, 0.586);
+  width: 400px;
+  padding: 40px;
+  border-radius: 8px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.Button-Container {
+    text-decoration: none;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+a.button {
+    background-color: rgb(80, 27, 255);
+    color: azure;
+    padding: 12px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}

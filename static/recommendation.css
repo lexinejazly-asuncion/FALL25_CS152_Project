@@ -1,0 +1,114 @@
+/* Background + page reset */
+body {
+    background-color: rgb(187, 197, 255);
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Header (same style as explore & form pages) */
+header {
+    position: absolute;
+    top: 40px;
+    left: 60px;
+}
+
+h1 {
+    color: rgb(104, 126, 251);
+    font-size: 40px;
+    margin: 0;
+}
+
+/* Center content below header */
+main {
+    display: flex;
+    justify-content: center;
+    padding-top: 140px; /* consistent spacing under header */
+    padding-bottom: 100px; /* prevents content from being cut off */
+}
+
+/* Main recommendations card */
+.rec-card {
+    background-color: white;
+    width: 80%;
+    max-width: 900px;
+    padding: 40px 50px;
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+/* Title + subtitle */
+.title {
+    font-size: 28px;
+    margin-top: 0;
+}
+
+.subtitle {
+    color: #555;
+    margin-top: 5px;
+    margin-bottom: 30px;
+    line-height: 1.4;
+}
+
+/* List of RSOs (vertical layout) */
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Each recommended RSO item row */
+.rso-item {
+    background-color: #eef7ff;
+    padding: 16px 20px;
+    border-radius: 8px;
+    border: 1px solid #dfe8f1;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.name {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+/* Button styling */
+.button-container {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.button {
+    background-color: rgb(80, 27, 255);
+    color: white;
+    padding: 12px 26px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 15px;
+    display: inline-block;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+/* OUTLINE star (default) */
+.star {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+
+    fill: transparent;          /* no fill */
+    stroke: black;              /* black outline */
+    stroke-width: 2px;
+
+    transition: stroke 0.2s ease, fill 0.2s ease;
+}
+
+/* PURPLE filled star when clicked */
+.star.active {
+    fill: rgb(80, 27, 255);     /* purple fill */
+    stroke: black;   /* purple outline */
+}
+
+

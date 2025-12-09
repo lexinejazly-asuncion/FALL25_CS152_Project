@@ -1,0 +1,79 @@
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(187, 197, 255);
+}
+
+
+/* Header logo */
+.logo {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 30px 0 0 60px;
+    color: rgb(104, 126, 251);
+}
+
+/* Greeting */
+.greeting {
+    text-align: center;
+    font-size: 42px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: black;
+}
+
+/* Main profile card */
+.profile-card {
+    background-color: white;
+    width: 60%;
+    max-width: 900px;
+    margin: 0 auto;
+    margin-top: 10px;
+    padding: 40px 50px;
+    border-radius: 14px;
+
+    /* Soft shadow */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Section title + subtitle */
+.section-title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.section-subtitle {
+    margin-top: 5px;
+    margin-bottom: 25px;
+    color: #666;
+}
+
+/* RSO list */
+.rso-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    max-height: 260px;
+    overflow-y: auto;
+    padding-right: 6px; /* space for scrollbar */
+}
+
+/* Individual RSO Item */
+.rso-item {
+    background-color: #f5fbff;
+    border: 1px solid #d5e2ee;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+
+    /* Soft neumorphic look */
+    box-shadow:
+        inset 1px 1px 2px rgba(255, 255, 255, 0.9),
+        inset -1px -1px 3px rgba(0, 0, 0, 0.04);
+}

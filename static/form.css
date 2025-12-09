@@ -1,0 +1,81 @@
+/* Background color */
+body {
+    background-color: rgb(187, 197, 255);
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+/* Header */
+header {
+    position: absolute;
+    top: 40px;
+    left: 60px;
+}
+
+h1 {
+    color: rgb(104, 126, 251);
+    font-size: 40px;
+    margin: 0;
+}
+
+/* Card center layout */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Main card */
+.card {
+    background-color: white;
+    width: 700px;
+    padding: 40px 50px;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+/* Titles */
+.title {
+    font-size: 28px;
+    margin: 0 0 5px 0;
+}
+
+.subtitle {
+    color: #444;
+    margin-bottom: 30px;
+}
+
+/* Label */
+label {
+    font-size: 16px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Dropdown */
+.dropdown {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid rgb(150, 150, 150);
+    margin-bottom: 25px;
+    font-size: 15px;
+}
+
+/* Button */
+.button-container {
+    text-align: left;
+}
+
+.button {
+    background-color: rgb(80, 27, 255);
+    color: white;
+    padding: 12px 26px;
+    border-radius: 5px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
