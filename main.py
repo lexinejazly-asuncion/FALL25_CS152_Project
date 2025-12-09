@@ -1,40 +1,40 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sentence_transformers import SentenceTransformer
+import os
 
+from scripts.model_trainer import train_and_initialize_models
 from scripts.scrape_web import scrape
 from scripts.load import load_clubs, json_to_dframe
 from scripts.process import preprocess
-from scripts.recommender import recommend
-from config.paths import GENERATED_CONTENT_CLUB_PATH
+from scripts.recommender import find_similar_clubs, recommend
+from config.paths import CLUB_DATA_JSON, LEXICAL_MATRIX_PATH, SEMANTIC_MATRIX_PATH
 
 def main():
-
-    print("1. Scraping website")
-    scrape() #call scrape method to get information about clubs
-
-    print("2. Loading into dframe")
-    clubs = load_clubs(GENERATED_CONTENT_CLUB_PATH) #load the data scraped about clubs
-    clubs_df = json_to_dframe(clubs) #create a dframe from the loaded data
-
-    print("3. Selecting keywords from club descriptions")
-    clubs_df["description_keywords"] = clubs_df["description"].apply(preprocess) #takes only important words from mission and benefits
-    club_indices = clubs_df.index.tolist()
-
-    print("4. Creating vector embeddings")
-    tfidf_vectorizer = TfidfVectorizer() #initialize a vector, where values are the result of td-idf
-    lexical_club_matrix = tfidf_vectorizer.fit_transform(clubs_df["description_keywords"]) #transforms text in 'description_keywords' into vectors, represents it lexically
-
-    model = SentenceTransformer('all-mpnet-base-v2') #initiaze the Sentence Transformer model
-    semantic_club_matrix = model.encode(clubs_df["description_keywords"].tolist()) #transforms text in 'description_keywords' into vectors, represents it semantically
+    #check if club data and models have already been initialized, if so load them
+    if os.path.exists(CLUB_DATA_JSON) and os.path.exists(LEXICAL_MATRIX_PATH) and os.path.exists(SEMANTIC_MATRIX_PATH):
+        clubs = load_clubs(CLUB_DATA_JSON) #load the data scraped about clubs
+        clubs_df = json_to_dframe(clubs) #create a dframe from the loaded data
+        club_indices = clubs_df.index.tolist()
     
-    user_input = input("What are you looking for? ")
+    #otherwise initialize them
+    else:
+        scrape() #call scrape method to get information about clubs
 
-    print("5. Searching for most relevant matches")
-    recommended_clubs = recommend(user_input, club_indices, model, tfidf_vectorizer, semantic_club_matrix, lexical_club_matrix, n=10)
+        clubs = load_clubs(CLUB_DATA_JSON) #load the data scraped about clubs
+        clubs_df = json_to_dframe(clubs) #create a dframe from the loaded data
+
+        clubs_df["description_keywords"] = clubs_df["description"].apply(preprocess) #takes only important words from name, category, mission, and benefits
+        club_indices = clubs_df.index.tolist()
+
+        train_and_initialize_models(clubs_df)
+    
+    #ask for user query   
+    #user_input = input("What are you looking for? ")
+    user_input = "I am interested in clubs that combine electrical engineering and computer science research"
+
+    recommended_clubs = recommend(user_input, club_indices, n=20)
 
     print("Recommended clubs", recommended_clubs)
 
-
+    # !!!!!! TO IMPLEMENT LATER: find_similar_clubs(selected_club_names, club_indices, n=10) !!!!
 
 if __name__ == "__main__":
     main()

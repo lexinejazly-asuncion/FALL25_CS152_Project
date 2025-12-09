@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import json
 import requests
 
-from config.paths import GENERATED_CONTENT_CLUB_PATH
+from config.paths import CLUB_DATA_JSON
 
 #University's website that has all the RSOs on campus
 URL = "https://sammyapp.sjsu.edu/club_signup?view=all&c" 
@@ -46,7 +46,7 @@ def scrape():
         })
 
     # writes the scraped rso informnation into a json file  
-    with open(GENERATED_CONTENT_CLUB_PATH, "w", encoding="utf-8") as f:
+    with open(CLUB_DATA_JSON, "w", encoding="utf-8") as f:
         json.dump(rsos, f, indent=2, ensure_ascii=False)
 
 
