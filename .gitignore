@@ -1,3 +1,10 @@
+#virtual environment
 venv/
 .DS_Store
+
+#python bytecode cache files
+__pycache__/
+
+#generated content: scraped club data, models
+generated_content/
 
