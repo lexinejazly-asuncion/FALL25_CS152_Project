@@ -56,9 +56,7 @@ After installing these dependencies, run:
 ```
 python3  
 import nltk
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger_eng')
-nltk.download('wordnet') 
+nltk.download('all')
 exit()
 ```
 
