@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Explore RSOs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='explore.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>FindYourRSO</h1>
+</header>
+
+<main>
+    <div class="explore-card">
+
+        <h2 class="title">FindYourFit</h2>
+        <p class="subtitle">Explore and select clubs or organizations that you like</p>
+
+        <div class="grid">
+            {% for i in range(6) %}
+            <div class="rso-card">
+                <div class="rso-header">
+                    <h3>RSO Name</h3>
+                    <input type="checkbox">
+                </div>
+                <p class="tags"><strong>Tags:</strong></p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="button-container">
+            <a href="/recommendation" class="button">Submit</a>
+        </div>
+
+    </div>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+
+h1 {
+    color: rgb(104, 126, 251);
+}
+
+body {
+    background-color: rgb(187, 197, 255);
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    align-content: center;
+}
+
+h1{
+    font-size: 60px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+p {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 100px;   
+}
+a {
+    background-color: rgb(80, 27, 255);
+    color: azure;
+    padding: 12px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.Body {
+    align-content: center;
+    
+}

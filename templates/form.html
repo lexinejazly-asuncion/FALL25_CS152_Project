@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FindYourFit</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>FindYourRSO</h1>
+</header>
+
+<main>
+    <div class="card">
+        <h2 class="title">FindYourFit</h2>
+        <p class="subtitle">Tell us what you’re looking for, we’ll do the rest.</p>
+
+        <label for="clubType">What type of club/organization are you looking for?</label>
+        <select id="clubType" class="dropdown">
+            <option disabled selected>Value</option>
+            <option>Academic</option>
+            <option>Engineering</option>
+            <option>Cultural</option>
+            <option>Sports</option>
+        </select>
+
+        <div class="button-container">
+            <a href="/explore" class="button">Submit</a>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
