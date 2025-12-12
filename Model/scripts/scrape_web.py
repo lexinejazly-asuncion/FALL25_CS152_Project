@@ -1,9 +1,9 @@
-import os
 import json
 import requests
 from bs4 import BeautifulSoup
+
 from config.paths import CLUB_DATA_JSON
-from scripts.model_trainer import make_dir
+from Model.scripts.model_trainer import make_dir
 
 #University's website that has all the RSOs on campus
 URL = "https://sammyapp.sjsu.edu/club_signup?view=all&c" 

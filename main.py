@@ -1,10 +1,10 @@
 import os
 
-from scripts.model_trainer import train_and_initialize_models
-from scripts.scrape_web import scrape
-from scripts.load import load_clubs, json_to_dframe
-from scripts.process import preprocess
-from scripts.recommender import load_recommendation_models, recommend
+from Model.scripts.model_trainer import train_and_initialize_models
+from Model.scripts.scrape_web import scrape
+from Model.scripts.load import load_clubs, json_to_dframe
+from Model.scripts.process import preprocess
+from Model.scripts.recommender import load_recommendation_models, recommend
 from config.paths import CLUB_DATA_JSON, LEXICAL_MATRIX_PATH, SEMANTIC_MATRIX_PATH, CLUB_INDICES_PATH
 
 def main():

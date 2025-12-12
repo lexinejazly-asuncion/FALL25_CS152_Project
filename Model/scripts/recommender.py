@@ -4,8 +4,8 @@ import numpy as np
 from scipy.sparse import load_npz
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
-from scripts.process import preprocess
 
+from Model.scripts.process import preprocess
 from config.paths import TFIDF_VECTORIZER_PATH, LEXICAL_MATRIX_PATH, SEMANTIC_MODEL_PATH, SEMANTIC_MATRIX_PATH, CLUB_INDICES_PATH
 
 #loads the pre-trained models, matrices, and club indices 

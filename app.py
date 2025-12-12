@@ -1,6 +1,10 @@
 from flask import Flask, render_template
 
-app = Flask(__name__)
+from config.paths import TEMPLATE_DIRECTORY, STATIC_DIRECTORY
+
+app = Flask(__name__,
+            template_folder=TEMPLATE_DIRECTORY, 
+            static_folder=STATIC_DIRECTORY)
 
 @app.route('/')
 def home():
