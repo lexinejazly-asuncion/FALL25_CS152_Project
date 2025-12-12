@@ -1,25 +1,44 @@
 import pandas as pd
 import pickle
 import numpy as np
-
 from scipy.sparse import load_npz
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from scripts.process import preprocess
 
-from config.paths import TFIDF_VECTORIZER_PATH, LEXICAL_MATRIX_PATH, SEMANTIC_MODEL_PATH, SEMANTIC_MATRIX_PATH, CLUB_SIMILARITY_MATRIX_PATH
+from config.paths import TFIDF_VECTORIZER_PATH, LEXICAL_MATRIX_PATH, SEMANTIC_MODEL_PATH, SEMANTIC_MATRIX_PATH, CLUB_INDICES_PATH
 
-#round1 of recommendations (results show up on explore page): fused ranks from semantic and lexical matching comparing every club against the user query
-def recommend(user_input, club_indices, n):
-    #load the tdidf vectorizer and lexical matrix
+#loads the pre-trained models, matrices, and club indices 
+def load_recommendation_models():
+    #load the tfidf vectorizer and lexical matrix
     with open(TFIDF_VECTORIZER_PATH, "rb") as f:
         tfidf_vectorizer = pickle.load(f)
     lexical_club_matrix = load_npz(LEXICAL_MATRIX_PATH)
 
-
     #load the sentence embeddings model and semantic matrix
     sentence_embedding_model = SentenceTransformer(SEMANTIC_MODEL_PATH)
     semantic_club_matrix = np.load(SEMANTIC_MATRIX_PATH)
+
+    #load club indices (mapping names to matrix positions)
+    with open(CLUB_INDICES_PATH, "rb") as f:
+        club_indices = pickle.load(f)
+        
+    return {
+        "tfidf_vectorizer": tfidf_vectorizer,
+        "lexical_matrix": lexical_club_matrix,
+        "semantic_model": sentence_embedding_model,
+        "semantic_matrix": semantic_club_matrix,
+        "club_indices": club_indices,
+    }
+
+#recommendations, results show up on explore page: fused ranks from semantic and lexical matching comparing every club against the user query
+def recommend(user_input, loaded_models, n):
+    #take the models from the loaded_models dictionary
+    tfidf_vectorizer = loaded_models["tfidf_vectorizer"]
+    lexical_club_matrix = loaded_models["lexical_matrix"]
+    sentence_embedding_model = loaded_models["semantic_model"]
+    semantic_club_matrix = loaded_models["semantic_matrix"]
+    club_indices = loaded_models["club_indices"]
 
     #process the query
     processed_query = preprocess(user_input)
@@ -50,40 +69,3 @@ def recommend(user_input, club_indices, n):
     top_n = pd.Series(fused_scores).sort_values(ascending=False).head(n)
 
     return top_n.index.tolist()
-
-#round2 of recommendations (results show up on your recommendations page): from user selected clubs, compute cosine similary comparing with other clubs
-def find_similar_clubs(selected_club_names, club_indices, n=10):
-    #load the similarity matrix
-    similarity_matrix = np.load(CLUB_SIMILARITY_MATRIX_PATH)
-
-    # map club names to their index position in the matrix
-    name_to_index = {name: i for i, name in enumerate(club_indices)}
-    
-    # initialize scores for all clubs
-    cumulative_scores = pd.Series(0.0, index=club_indices)
-    
-    # aggregate similarity scores
-    for name in selected_club_names:
-        if name in name_to_index:
-            idx = name_to_index[name]
-            # Get the similarity vector for the selected club
-            similarity_vector = similarity_matrix[idx]
-            
-            # Add to cumulative scores
-            club_scores = pd.Series(similarity_vector, index=club_indices)
-            cumulative_scores += club_scores
-            
-    # filter out the selected clubs themselves
-    cumulative_scores = cumulative_scores.drop(labels=selected_club_names, errors='ignore')
-
-    # normalize scores and rank
-    if not cumulative_scores.empty:
-        # normalize by the number of clubs selected
-        normalized_scores = cumulative_scores / len(selected_club_names)
-        
-        # select the top N
-        top_n = normalized_scores.sort_values(ascending=False).head(n)
-        return top_n.index.tolist()
-    
-    else:
-        return []

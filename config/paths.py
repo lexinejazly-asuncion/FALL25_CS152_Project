@@ -6,6 +6,9 @@ BASE_DIRECTORY = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GENERATED_CONTENT_PATH = os.path.join(BASE_DIRECTORY, "generated_content")
 CLUB_DATA_JSON = os.path.join(GENERATED_CONTENT_PATH, "rso.json")
 
+#TO LOAD CLUB DATA
+CLUB_INDICES_PATH = os.path.join(GENERATED_CONTENT_PATH, "club_indices.pkl")
+
 #TO LOAD MODELS
 MODEL_PATH = os.path.join(GENERATED_CONTENT_PATH, "models")
 
