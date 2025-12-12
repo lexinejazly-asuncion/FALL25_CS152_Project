@@ -10,25 +10,28 @@
 <body>
 
 <header>
-    <h1>FindYourRSO</h1>
+    <h1 class="logo">FindYourRSO</h1>
 </header>
 
 <main>
-    <h2 class="greeting">Hello, Name!</h2>
+    <h2 class="greeting">FoundYourRSOs</h2>
 
     <div class="profile-card">
 
-        <h3 class="section-title">FoundYourRSOs</h3>
         <p class="section-subtitle">Here is a list of your recommended and saved clubs and organizations</p>
 
         <div class="rso-list">
 
-            <!-- RSO Item -->
-            <div class="rso-item">RSO Name</div>
-            <div class="rso-item">RSO Name</div>
-            <div class="rso-item">RSO Name</div>
-            <div class="rso-item">RSO Name</div>
-            <div class="rso-item">RSO Name</div>
+            <!-- List of saved rsos, iterates through the list of saved/starred from recommendations -->
+            <div class="rso-list">
+            {% if saved_rso %}
+                {% for rso in saved_rso %}
+                    <div class="rso-item">{{ rso }}</div>
+                {% endfor %}
+            {% else %}
+                <p>No RSOs saved yet.</p>
+            {% endif %}
+        </div>
 
         </div>
 

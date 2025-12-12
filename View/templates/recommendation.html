@@ -17,66 +17,56 @@
     <div class="rec-card">
 
         <!-- Title Section -->
-        <h2 class="title">FoundYourFit</h2>
+        <h2 class="title">FoundYourFit!</h2>
         <p class="subtitle">
             Here are some recommended clubs and organizations based on your interests!  
             Star the RSOs that you would like saved to your profile.
         </p>
 
         <!-- List of Recommendations -->
+        <!-- Iterates through the list of recommendations -->
         <div class="list">
-
-            <div class="rso-item">
-                <span class="name">RSO Name</span>
-                <svg class="star" viewBox="0 0 24 24">
-                    <path d="M12 .587l3.668 7.568L24 9.748l-6 5.848L19.335 24 12 19.897 4.665 24 6 15.596 0 9.748l8.332-1.593z"/>
-                </svg>
-            </div>
-
-            <div class="rso-item">
-                <span class="name">RSO Name</span>
-                <svg class="star" viewBox="0 0 24 24">
-                    <path d="M12 .587l3.668 7.568L24 9.748l-6 5.848L19.335 24 12 19.897 4.665 24 6 15.596 0 9.748l8.332-1.593z"/>
-                </svg>
-            </div>
-
-            <div class="rso-item">
-                <span class="name">RSO Name</span>
-                <svg class="star" viewBox="0 0 24 24">
-                    <path d="M12 .587l3.668 7.568L24 9.748l-6 5.848L19.335 24 12 19.897 4.665 24 6 15.596 0 9.748l8.332-1.593z"/>
-                </svg>
-            </div>
-
-            <div class="rso-item">
-                <span class="name">RSO Name</span>
-                <svg class="star" viewBox="0 0 24 24">
-                    <path d="M12 .587l3.668 7.568L24 9.748l-6 5.848L19.335 24 12 19.897 4.665 24 6 15.596 0 9.748l8.332-1.593z"/>
-                </svg>
-            </div>
-
-            <div class="rso-item">
-                <span class="name">RSO Name</span>
-                <svg class="star" viewBox="0 0 24 24">
-                    <path d="M12 .587l3.668 7.568L24 9.748l-6 5.848L19.335 24 12 19.897 4.665 24 6 15.596 0 9.748l8.332-1.593z"/>
-                </svg>
-            </div>
-
+        {% for club_name in recommended_clubs %}
+        <div class="rso-item" data-name="{{ club_name }}">
+            <span class="name">{{ club_name }}</span> 
+            <svg class="star" viewBox="0 0 24 24">
+                <path d="M12 .587l3.668 7.568L24 9.748l-6 5.848L19.335 24 12 19.897 4.665 24 6 15.596 0 9.748l8.332-1.593z"/>
+            </svg>
         </div>
+        {% endfor %}
+        </div>
+
 
         <!-- Button to go to profile -->
-        <div class="button-container">
-            <a href="/profile" class="button">Go to Profile</a>
-        </div>
+       <form id="saveForm" action="/save_rso" method="POST">
+            <input type="hidden" name="selected" id="selected-input">
+            <button type="submit" class="button">Go to Profile</button>
+        </form>
 
     </div>
 </main>
 
-<!-- Star Toggle Script -->
 <script>
+    // toggle star icon
     document.querySelectorAll('.star').forEach(star => {
         star.addEventListener('click', () => {
             star.classList.toggle('active');
         });
+    });
+
+     // Before submitting form, save the starred RSOs
+    document.getElementById("saveForm").addEventListener("submit", (e) => {
+        const selectedNames = [];
+
+        document.querySelectorAll(".rso-item").forEach(item => {
+            const star = item.querySelector(".star");
+            if (star.classList.contains("active")) {
+                selectedNames.push(item.dataset.name);
+            }
+        });
+
+        // Convert into a JSON string
+        document.getElementById("selected-input").value = JSON.stringify(selectedNames);
     });
 </script>
 
