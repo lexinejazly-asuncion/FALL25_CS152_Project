@@ -4,9 +4,10 @@ from Model.scripts.model_trainer import train_and_initialize_models
 from Model.scripts.scrape_web import scrape
 from Model.scripts.load import load_clubs, json_to_dframe
 from Model.scripts.process import preprocess
-from Model.scripts.recommender import load_recommendation_models, recommend
 from config.paths import CLUB_DATA_JSON, LEXICAL_MATRIX_PATH, SEMANTIC_MATRIX_PATH, CLUB_INDICES_PATH
 
+#Intializes the data and models if they don't already exist, other wise, loads them from the saved generated_content path
+#before running the app.py web application, MAIN.PY MUST BE RAN ONCE SO DATA, MODELS, AND EMBEDDINGS ARE INITIALIZED
 def main():
     print("Searching for trained models and data...\n")
     #check if club data and models have already been initialized, at least one of them does not, re-initialize them
@@ -26,21 +27,12 @@ def main():
         print("Calculating and initializing vector embeddings\n")
         train_and_initialize_models(clubs_df)
 
-        print("Loading vector embeddings for club data\n")
-        loaded_models = load_recommendation_models()
+        print("Intialized the necessary models and data. You may now run app.py to access the FindYourRSO web application.\n ")
+
     else:
-        print("Found necessary models and data. Loading existing vector embeddings for club data\n")
-        #load all models and matrices 
-        loaded_models = load_recommendation_models()
+        print("Found necessary models and data. You may now run app.py to access the FindYourRSO web application.\n")
+
     
-    #ask for user query   
-    #user_input = input("What are you looking for? ")
-    user_input1 = "I want to join a club for business majors. I would like to have chances to " \
-    "network with professionals and also connect with alumni. If there is a possibility, " \
-    "I would also like to work on consulting projects."
-
-    recommended_clubs = recommend(user_input1, loaded_models, n=20)
-    print("Recommended clubs", recommended_clubs)
-
+    
 if __name__ == "__main__":
     main()

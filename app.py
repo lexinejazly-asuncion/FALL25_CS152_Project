@@ -39,7 +39,7 @@ def get_recommendations():
         query = input.strip()
 
         # call the recommend function
-        N_CLUBS = 10 
+        N_CLUBS = 15 
         recommended_clubs = recommend(
             user_input=query, 
             loaded_models=loaded_models, 
