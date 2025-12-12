@@ -15,8 +15,6 @@ CLUB_INDICES_PATH = os.path.join(GENERATED_CONTENT_PATH, "club_indices.pkl")
 #TO LOAD MODELS
 TRAINED_MODEL_PATH = os.path.join(GENERATED_CONTENT_PATH, "trained_models")
 
-CLUB_SIMILARITY_MATRIX_PATH = os.path.join(TRAINED_MODEL_PATH, "club_similarity_matrix.npy")
-
 TFIDF_VECTORIZER_PATH = os.path.join(TRAINED_MODEL_PATH, "tfidf_vectorizer.pkl")
 LEXICAL_MATRIX_PATH = os.path.join(TRAINED_MODEL_PATH, "lexical_matrix.npz")
 

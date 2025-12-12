@@ -3,7 +3,6 @@ body {
     background-color: rgb(187, 197, 255);
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
 }
 
 /* Header */
@@ -23,17 +22,18 @@ h1 {
 main {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     height: 100vh;
 }
 
 /* Main card */
 .card {
     background-color: white;
-    width: 700px;
+    width: 1000px;
     padding: 40px 50px;
     border-radius: 10px;
     box-sizing: border-box;
+    margin-top: 150px;
 }
 
 /* Titles */
@@ -78,4 +78,37 @@ label {
     border: none;
     cursor: pointer;
     font-size: 15px;
+}
+
+/* Textbox */
+.textbox {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid rgb(150, 150, 150);
+    margin-bottom: 25px; 
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+/* Multiselect boxes */
+.checkbox-group {
+    border: 1px solid rgb(150, 150, 150); 
+    border-radius: 6px;
+    padding: 12px; 
+    margin-bottom: 25px; 
+    font-size: 15px;
+}
+
+/* Multiselect box labels */
+.checkbox-group label {
+    display: inline; 
+    font-size: 15px; 
+    font-weight: normal;
+}
+
+/* Multiselect check boxes */
+.checkbox-group input[type="checkbox"] {
+    margin-right: 8px;
+    margin-bottom: 6px; 
 }

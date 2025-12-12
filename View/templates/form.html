@@ -14,17 +14,67 @@
 
 <main>
     <div class="card">
+
         <h2 class="title">FindYourFit</h2>
         <p class="subtitle">Tell us what you’re looking for, we’ll do the rest.</p>
 
-        <label for="clubType">What type of club/organization are you looking for?</label>
-        <select id="clubType" class="dropdown">
-            <option disabled selected>Value</option>
-            <option>Academic</option>
-            <option>Engineering</option>
-            <option>Cultural</option>
-            <option>Sports</option>
-        </select>
+        <!-- Major (required) -->
+        <label for="major">What is your major?</label>
+        <input type="text" id="major" name="major" class="textbox" placeholder="Enter your major" required>
+        
+
+        <!-- Second Major (optional) -->
+        <label for="secondMajor">Do you have a second major? (optional)</label>
+        <input type="text" id="secondMajor" name="secondMajor" class="textbox" placeholder="Enter your second major">
+
+        <!-- Minor (optional) -->
+        <label for="minor">Do you have a minor? (optional)</label>
+        <input type="text" id="minor" name="minor" class="textbox" placeholder="Enter your minor">
+
+        <!-- Club category multiselect (optional) -->
+        <label for="clubCategories">What categories of clubs are you looking for? (Select all that apply)</label>
+        <div class="checkbox-group">
+            <input type="checkbox" id="cultural" name="clubCategories" value="Cultural/Religious">
+            <label for="cultural">Cultural/Religious</label><br>
+
+            <input type="checkbox" id="academic" name="clubCategories" value="Academic">
+            <label for="academic">Academic</label><br>
+
+            <input type="checkbox" id="special" name="clubCategories" value="Special Interests">
+            <label for="special">Special Interests</label><br>
+
+            <input type="checkbox" id="fraternity" name="clubCategories" value="Fraternity/Sorority">
+            <label for="fraternity">Fraternity/Sorority</label><br>
+
+            <input type="checkbox" id="college" name="clubCategories" value="College/Department/Program">
+            <label for="college">College/Department/Program</label><br>
+
+            <input type="checkbox" id="sports" name="clubCategories" value="Club Sports">
+            <label for="sports">Club Sports</label>
+        </div>
+
+        <!-- Benefits multiselect (optional)-->
+        <label for="clubBenefits">What benefits do you want from a club? (Select all that apply)</label>
+        <div class="checkbox-group">
+            <input type="checkbox" id="social" name="clubBenefits" value="Community/Social">
+            <label for="social">Community</label><br>
+
+            <input type="checkbox" id="professional" name="clubBenefits" value="Professional/Technical">
+            <label for="professional">Professional Development</label><br>
+
+            <input type="checkbox" id="service" name="clubBenefits" value="Service">
+            <label for="service">Volunteer Opportunities</label><br>
+
+            <input type="checkbox" id="leadership" name="clubBenefits" value="Leadership">
+            <label for="leadership">Leadership Development</label><br>
+
+            <input type="checkbox" id="networking" name="clubBenefits" value="Networking">
+            <label for="networking">Networking</label>
+        </div>
+
+        <!-- User query -->
+        <label for="description">What are you looking for in a club or organization?</label>
+        <textarea id="description" name="description" class="textbox" rows="5" required></textarea>
 
         <div class="button-container">
             <a href="/explore" class="button">Submit</a>

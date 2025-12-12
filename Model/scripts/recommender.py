@@ -43,19 +43,19 @@ def recommend(user_input, loaded_models, n):
     #process the query
     processed_query = preprocess(user_input)
     
-    #find the similarity between 
-    query_semantic_vector = sentence_embedding_model.encode([processed_query]) #transforms text in 'description_keywords' into vectors, represents it semanticallu
+    #find the similarity between query and dense vector (sentence-transformer)
+    query_semantic_vector = sentence_embedding_model.encode([processed_query]) #transforms text in 'description_keywords' into vectors, represents it semantically
     dense_scores = cosine_similarity(query_semantic_vector, semantic_club_matrix)[0] #compute the cosine similarity between the vectors
     dense_ranked = pd.Series(dense_scores, index=club_indices).sort_values(ascending=False)
     
-    #find the similarity between 
+    #find the similarity between query and sparse vector (tfidf)
     query_lexical_vector = tfidf_vectorizer.transform([processed_query]) #transforms text in 'description_keywords' into vectors, represents it lexically
     sparse_scores = cosine_similarity(query_lexical_vector, lexical_club_matrix)[0] #compute the cosine similarity between the vectors
     sparse_ranked = pd.Series(sparse_scores, index=club_indices).sort_values(ascending=False)
     
     #combine ranked scores using Reciprocal Rank Fusion
     fused_scores = {}
-    k = 45 #in rrf implementations, k is typically 60, but lower k means more aggressive ranking differences so higher ranked clubs across both models are ranked higher
+    k = 60 #in rrf implementations, k is typically 60, but lower k means more aggressive ranking differences
     
     #process dense Ranks
     for rank, (club_name, score) in enumerate(dense_ranked.items()):
