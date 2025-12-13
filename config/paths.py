@@ -29,3 +29,6 @@ STATIC_DIRECTORY = os.path.join(VIEW_DIRECTORY, 'static')
 
 #TO LOAD HTML FILES
 TEMPLATE_DIRECTORY = os.path.join(VIEW_DIRECTORY, 'templates')
+
+#TO SAVE USER LOG-IN INFORMATION AND PROFILE DATA
+USER_DATA_PATH = os.path.join(GENERATED_CONTENT_PATH, "student_profile", "users.json")

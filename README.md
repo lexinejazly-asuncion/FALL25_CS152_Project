@@ -1,4 +1,4 @@
-# FALL25_CS152_Project  
+# FALL25 CS152 Term Project  
 
 
 ## Abstract  
@@ -6,20 +6,43 @@ Universities offer a wide range of recognized clubs and organizations for studen
 to join, yet many students struggle to connect with them. Research has shown
 that student involvement is strongly tied to academic performance, leadership
 development, well-being, and long-term career readiness, making it an essen-
-tial component of the college experience. At San Jos´e State University, where
+tial component of the college experience. At San Jose State University, where
 there are more than 300 student organizations, this gap is exacerbated by lim-
 ited club visibility, the commuter nature of the campus, and the demanding
-schedules of students. To address this gap, we propose a web application that
+schedules of students. 
+
+To address this gap, we propose a web application that
 automatically matches students with campus organizations based on their pro-
-files. The system will operate through the following workflow: data collection,
-database management, backend development, and front-end interface design.
+files, featuring data collection, backend development, and front-end interface design.
+
 Information about student organizations will be collected from the University’s
-webpage and stored in a relational database. Our application will accept student
-questionnaire responses and run a keyword-based matching algorithm, providing
+webpage. Our application will accept a student query and run a vector-vector mapping algorithm, providing
 students with a personalized interface to discover recommended organizations.
-At the conclusion of the project, the primary deliverable will be a fully func-
-tional web application capable of matching students to campus organizations
-based on their interests, skills, and availability.  
+
+FindYourRSO connects San José State University students with RSOs that align with who they are and what they love. 
+
+## Tech Stack
+Backend/Server-side: Python, Flask 
+Frontend/Client-side: HTML, CSS
+
+## Project Structure
+The project is organized into the following directories and files:  
+
+config/: Configuration files and global paths (paths.py)
+
+Model/: Contains logic for the recommendation system  
+--> generated_content/: Stores trained models, scraped data artifacts, and student profile data. 
+--> scripts/: Contains python scripts for generating recommendations, scraping, processing, and embedding data
+
+View/: Contains static UI files
+--> static/: Static front-end assets (CSS files) 
+--> templates/: HTML files for web pages
+
+requirements.txt: List of all required Python dependencies  
+
+main.py: Script to initialize and load models and vectors  
+
+app.py: Entry point for the web application  
 
 ## How to run this application  
 ### Prerequisites  

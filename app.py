@@ -3,7 +3,7 @@ import json
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from config.paths import TEMPLATE_DIRECTORY, STATIC_DIRECTORY
+from config.paths import TEMPLATE_DIRECTORY, STATIC_DIRECTORY, USER_DATA_PATH
 from Model.scripts.recommender import recommend, load_recommendation_models
 
 # Create Flask app
@@ -19,21 +19,18 @@ app.secret_key = os.urandom(24)
 
 # ----------------- USER STORAGE -----------------
 
-# File where all user accounts are saved
-USER_DATA_FILE = os.path.join(os.path.dirname(__file__), "data", "users.json")
-
 # Load user data from file
 def load_users():
-    if not os.path.exists(USER_DATA_FILE):
-        os.makedirs(os.path.dirname(USER_DATA_FILE), exist_ok=True)
-        with open(USER_DATA_FILE, "w") as f:
+    if not os.path.exists(USER_DATA_PATH):
+        os.makedirs(os.path.dirname(USER_DATA_PATH), exist_ok=True)
+        with open(USER_DATA_PATH, "w") as f:
             json.dump({}, f)
-    with open(USER_DATA_FILE, "r") as f:
+    with open(USER_DATA_PATH, "r") as f:
         return json.load(f)
 
 # Save users back to the JSON file
 def save_users(users):
-    with open(USER_DATA_FILE, "w") as f:
+    with open(USER_DATA_PATH, "w") as f:
         json.dump(users, f, indent=4)
 
 
