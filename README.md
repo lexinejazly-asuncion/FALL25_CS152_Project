@@ -2,53 +2,42 @@
 
 
 ## Abstract  
-Universities offer a wide range of recognized clubs and organizations for students
-to join, yet many students struggle to connect with them. Research has shown
-that student involvement is strongly tied to academic performance, leadership
-development, well-being, and long-term career readiness, making it an essen-
-tial component of the college experience. At San Jose State University, where
-there are more than 300 student organizations, this gap is exacerbated by lim-
-ited club visibility, the commuter nature of the campus, and the demanding
-schedules of students. 
+Universities offer a wide range of recognized clubs and organizations for students to join, yet many students struggle to connect with them. Research has shown that student involvement is strongly tied to academic performance, leadership development, well-being, and long-term career readiness, making it an essential component of the college experience. At San Jose State University, where there are more than 300 student organizations, this gap is exacerbated by limited club visibility, the commuter nature of the campus, and the demanding schedules of students. 
 
-To address this gap, we propose a web application that
-automatically matches students with campus organizations based on their pro-
-files, featuring data collection, backend development, and front-end interface design.
+To address this gap, we propose a web application that automatically matches students with campus organizations based on their profiles, featuring data collection, backend development, and front-end interface design.
 
-Information about student organizations will be collected from the University’s
-webpage. Our application will accept a student query and run a vector-vector mapping algorithm, providing
-students with a personalized interface to discover recommended organizations.
+Information about student organizations will be collected from the University’s webpage. Our application will accept a student query and run a vector-vector mapping algorithm, providing students with a personalized interface to discover recommended organizations.
 
 FindYourRSO connects San José State University students with RSOs that align with who they are and what they love. 
 
 ## Tech Stack
-Backend/Server-side: Python, Flask 
+Backend/Server-side: Python, Flask   
 Frontend/Client-side: HTML, CSS
 
 ## Project Structure
 The project is organized into the following directories and files:  
 
-config/: Configuration files and global paths (paths.py)
+**config/**: Configuration files and global paths (paths.py)
 
-Model/: Contains logic for the recommendation system  
---> generated_content/: Stores trained models, scraped data artifacts, and student profile data. 
---> scripts/: Contains python scripts for generating recommendations, scraping, processing, and embedding data
+**Model/**: Contains logic for the recommendation system    
+→ **generated_content/**: Stores trained models, scraped data artifacts, and student profile data   
+→ **scripts/**: Contains python scripts for generating recommendations, scraping, processing, and embedding data  
 
-View/: Contains static UI files
---> static/: Static front-end assets (CSS files) 
---> templates/: HTML files for web pages
+**View/**: Contains static UI files
+→ **static/**: Static front-end assets (CSS files)   
+→ **templates/**: HTML files for web pages  
 
-requirements.txt: List of all required Python dependencies  
+**requirements.txt**: List of all required Python dependencies  
 
-main.py: Script to initialize and load models and vectors  
+**main.py**: Script to initialize and load models and vectors  
 
-app.py: Entry point for the web application  
+**app.py**: Entry point for the web application  
 
-## How to run this application  
+## First Time Set Up  
 ### Prerequisites  
 1. Install Python  
 
-### First Time Set Up  
+### Downloading dependencies 
 Create a local copy of the repository:  
 ```
 git clone https://github.com/lexinejazly-asuncion/FALL25_CS152_Project.git
@@ -60,7 +49,7 @@ cd FALL25_CS152_Project
 ```
 
 This application runs on a virtual environment.   
-Create a virtual environment:  
+To create a virtual environment:  
 ```
 python3 -m venv venv
 ```
@@ -83,19 +72,19 @@ nltk.download('all')
 exit()
 ```
 
-### How to run this application  
-### Step 0a: Check the virtual environment is activated  
+## How to run this application  
+### Step 0a: Check that the virtual environment is activated  
 If your virtual environment is activated, it should say (venv) in your command line (Go to Step 0b)  
 If it's not, activate the virtual environment:  
 ```
 . venv/bin/activate
 ```
 
-#### Step 0b: Check if Models and Data are initialized
-If they are initialized, you will see a the ./Model/generated_content directory with 3 files: trained_models, club_indices.pkl, rso.json  (Go to Step 1)  
+### Step 0b: Check if the Models and Data are initialized
+If they are initialized, you will see 3 files ./Model/generated_content directory: trained_models, club_indices.pkl, rso.json  (SKIP to Step 1)  
 If any of these 3 files are missing, delete the generated_content folder (if it exists) 
 
-**IMPORTANT**: This step must be completed before starting the web application!   
+**IMPORTANT**: This step must be completed when starting the web application for the first time!   
 
 Run the main.py script:  
 ```
@@ -108,7 +97,7 @@ This process will:
 - Train the Lexical (TF-IDF) and Semantic (Sentence Transformer) models   
 - Save all models and matrices to the ./models directory  
 
-#### Step 1: Run the web application  
+### Step 1: Run the web application  
 
 Run the app.py script:
 ```
