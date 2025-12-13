@@ -86,8 +86,7 @@ header h1 {
         inset -1px -1px 3px rgba(0, 0, 0, 0.04);
 }
 
-/* -------------------- NAVBAR -------------------- */
-
+/* Navigation bar for easy accessibility on site */
 .navbar {
   position: fixed;
   top: 0;

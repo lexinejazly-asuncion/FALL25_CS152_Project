@@ -9,7 +9,7 @@
 
 <body>
 
-<!-- SHOW NAVBAR ONLY WHEN USER IS SIGNED IN -->
+<!-- Show navbar only when user is logged in -->
 {% if session.get('username') %}
 <nav class="navbar">
   <div class="nav-left">FindYourRSO</div>
@@ -21,13 +21,13 @@
   </div>
 </nav>
 
-<!-- Prevent content from hiding behind navbar -->
+<!-- Add spacing so content isn't hidden under navbar -->
 <style>
     body { padding-top: 90px; }
 </style>
 {% endif %}
 
-<!-- SHOW ORIGINAL HEADER ONLY FOR NON-LOGGED-IN VIEWERS -->
+<!-- Show original header only for visitors not logged in -->
 {% if not session.get('username') %}
 <header>
     <h1 class="logo">FindYourRSO</h1>
@@ -35,21 +35,25 @@
 {% endif %}
 
 <main>
+    <!-- Profile page title -->
     <h2 class="greeting">FoundYourRSOs</h2>
 
     <div class="profile-card">
 
+        <!-- Subtitle above saved clubs -->
         <p class="section-subtitle">
             Here is a list of your recommended and saved clubs and organizations
         </p>
 
+        <!-- List of saved RSOs -->
         <div class="rso-list">
             {% if saved_rso %}
                 {% for rso in saved_rso %}
+                    <!-- Each saved club -->
                     <div class="rso-item" style="display:flex; justify-content:space-between; align-items:center;">
                         <span>{{ rso }}</span>
 
-                        <!-- Delete button -->
+                        <!-- Remove button for each club -->
                         <form action="/delete_rso" method="POST" style="margin:0;">
                             <input type="hidden" name="rso_name" value="{{ rso }}">
                             <button type="submit" 
@@ -68,6 +72,7 @@
                     </div>
                 {% endfor %}
             {% else %}
+                <!-- Message when user has no saved clubs -->
                 <p>No RSOs saved yet.</p>
             {% endif %}
         </div>

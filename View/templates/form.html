@@ -8,7 +8,7 @@
 
 <body>
 
-<!-- SHOW NAVBAR ONLY WHEN USER IS SIGNED IN -->
+<!-- Show navbar when user is logged in -->
 {% if session.get('username') %}
 <nav class="navbar">
   <div class="nav-left">FindYourRSO</div>
@@ -20,12 +20,13 @@
   </div>
 </nav>
 
+<!-- Add space so content doesn't hide under navbar -->
 <style>
-    body { padding-top: 90px; } /* Prevents overlap */
+    body { padding-top: 90px; }
 </style>
 {% endif %}
 
-<!-- ORIGINAL HEADER ONLY IF USER IS NOT LOGGED IN -->
+<!-- Show original header for visitors who aren't logged in -->
 {% if not session.get('username') %}
 <header>
     <h1>FindYourRSO</h1>
@@ -40,10 +41,11 @@
 
         <form method="POST" action="/recommendation">
 
-        <!-- User query -->
+        <!-- User input for club search -->
         <label for="user_input">What are you looking for in a club or organization?</label>
         <textarea id="user_input" name="user_input" class="textbox" rows="5" required></textarea>
 
+        <!-- Submit button -->
         <div class="button-container">
             <button type="submit" class="button">Submit</button>
         </div>

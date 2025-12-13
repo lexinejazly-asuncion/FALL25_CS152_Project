@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recommendations</title>
 
-    <!-- Load global styling (includes NAVBAR styles) -->
+    <!-- Load shared styles (includes navbar styling) -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
 
-    <!-- Page-specific styling -->
+    <!-- Load page-specific styles -->
     <link rel="stylesheet" href="{{ url_for('static', filename='recommendation.css') }}">
 </head>
 
 <body>
 
-<!-- ⭐ NAVBAR ALWAYS SHOWN ON THIS PAGE -->
+<!-- Navigation bar for logged-in users -->
 <nav class="navbar">
   <div class="nav-left">FindYourRSO</div>
 
@@ -25,7 +25,7 @@
   </div>
 </nav>
 
-<!-- ⭐ Perfect spacing under navbar -->
+<!-- Add spacing so content sits below navbar -->
 <style>
     body { padding-top: 110px; }
 </style>
@@ -33,30 +33,33 @@
 <main>
     <div class="rec-card">
 
-        <!-- Title Section -->
+        <!-- Page title and instructions -->
         <h2 class="title">FoundYourFit!</h2>
         <p class="subtitle">
-            Here are some recommended clubs and organizations based on your interests!  
+            Here are some recommended clubs and organizations based on your interests.  
             Star the RSOs that you would like saved to your profile.
         </p>
 
-        <!-- List of Recommendations -->
+        <!-- List of recommended RSOs -->
         <div class="list">
         {% for club_name in recommended_clubs %}
             <div class="rso-item" data-name="{{ club_name }}">
+                
+                <!-- Club name -->
                 <span class="name">{{ club_name }}</span>
 
-                <!-- Auto-star if previously saved -->
+                <!-- Star icon (auto-filled if already saved) -->
                 <svg class="star {% if club_name in saved_rso %}active{% endif %}" 
                      viewBox="0 0 24 24">
                     <path d="M12 .587l3.668 7.568L24 9.748l-6 5.848L19.335 24 
                              12 19.897 4.665 24 6 15.596 0 9.748l8.332-1.593z"/>
                 </svg>
+
             </div>
         {% endfor %}
         </div>
 
-        <!-- Submit starred clubs -->
+        <!-- Form to save all selected RSOs -->
         <form id="saveForm" action="/save_rso" method="POST">
             <input type="hidden" name="selected" id="selected-input">
             <button type="submit" class="button">Go to Profile</button>
@@ -66,14 +69,14 @@
 </main>
 
 <script>
-    // Toggle star icon on click
+    // Toggle purple star when clicked
     document.querySelectorAll('.star').forEach(star => {
         star.addEventListener('click', () => {
             star.classList.toggle('active');
         });
     });
 
-    // Save starred RSOs before form submit
+    // Before submitting, collect all starred RSOs
     document.getElementById("saveForm").addEventListener("submit", () => {
         const selectedNames = [];
 

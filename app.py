@@ -6,19 +6,23 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from config.paths import TEMPLATE_DIRECTORY, STATIC_DIRECTORY
 from Model.scripts.recommender import recommend, load_recommendation_models
 
+# Create Flask app
 app = Flask(
     __name__, 
     template_folder=TEMPLATE_DIRECTORY, 
     static_folder=STATIC_DIRECTORY
 )
 
+# Secret key for sessions
 app.secret_key = os.urandom(24)
 
 
 # ----------------- USER STORAGE -----------------
 
+# File where all user accounts are saved
 USER_DATA_FILE = os.path.join(os.path.dirname(__file__), "data", "users.json")
 
+# Load user data from file
 def load_users():
     if not os.path.exists(USER_DATA_FILE):
         os.makedirs(os.path.dirname(USER_DATA_FILE), exist_ok=True)
@@ -27,6 +31,7 @@ def load_users():
     with open(USER_DATA_FILE, "r") as f:
         return json.load(f)
 
+# Save users back to the JSON file
 def save_users(users):
     with open(USER_DATA_FILE, "w") as f:
         json.dump(users, f, indent=4)
@@ -34,21 +39,23 @@ def save_users(users):
 
 # ----------------- LOAD MODELS -----------------
 
+# Load the recommendation models once
 loaded_models = load_recommendation_models()
 
 
 # ----------------- ROUTES -----------------
 
+# Landing page
 @app.route('/')
 def home():
     return render_template('home.html')
 
-
+# Login page
 @app.route('/login.html')
 def login():
     return render_template('login.html')
 
-
+# Signup page
 @app.route('/signup.html')
 def signup():
     return render_template('signup.html')
@@ -58,28 +65,33 @@ def signup():
 
 @app.route('/signup', methods=['POST'])
 def signup_user():
+    # Get form inputs
     first_name = request.form.get("first_name", "").strip()
     username = request.form.get("username", "").strip()
     password = request.form.get("password", "")
 
+    # Only allow SJSU email
     if not username.endswith("@sjsu.edu"):
         flash("Please use your SJSU email (@sjsu.edu).")
         return redirect(url_for('signup'))
 
+    # Check if all fields are filled
     if not first_name or not username or not password:
         flash("All fields are required.")
         return redirect(url_for('signup'))
 
     users = load_users()
 
+    # Prevent duplicate account
     if username in users:
         flash("An account with this email already exists.")
         return redirect(url_for('signup'))
 
+    # Create new user
     users[username] = {
         "first_name": first_name,
         "password_hash": generate_password_hash(password),
-        "saved_rso": []   # ⭐ initialize saved clubs list
+        "saved_rso": []     # list of saved RSOs for this user
     }
     save_users(users)
 
@@ -91,37 +103,43 @@ def signup_user():
 
 @app.route('/login', methods=['POST'])
 def login_user():
+    # Get login form data
     username = request.form.get("username", "").strip()
     password = request.form.get("password", "")
 
     users = load_users()
     user = users.get(username)
 
+    # If email doesn't exist
     if not user:
         flash("No account found with that email.")
         return redirect(url_for('login'))
 
+    # Wrong password
     if not check_password_hash(user["password_hash"], password):
         flash("Incorrect password.")
         return redirect(url_for('login'))
 
+    # Store login info in session
     session["username"] = username
     session["first_name"] = user["first_name"]
 
     return redirect(url_for('form'))
 
 
-# ----------------- PROTECTED FORM -----------------
+# ----------------- PROTECTED FORM PAGE -----------------
 
 @app.route("/form")
 def form():
+    # Only logged-in users can access
     if "username" not in session:
         flash("Please sign in first.")
         return redirect(url_for('login'))
     return render_template("form.html")
 
 
-# ----------------- RECOMMENDATIONS -----------------
+# ----------------- RECOMMENDATION PAGE -----------------
+
 @app.route('/recommendation', methods=['POST'])
 def get_recommendations():
     user_input = request.form.get('user_input', '').strip()
@@ -133,16 +151,17 @@ def get_recommendations():
         n=N_CLUBS
     )
 
-    # Load saved RSOs for this user
+    # Load saved RSOs for this user (for auto-starring)
     users = load_users()
     saved = []
     if session.get("username"):
         saved = users[session["username"]].get("saved_rso", [])
 
+    # Pass saved RSOs into the page
     return render_template(
         'recommendation.html',
         recommended_clubs=recommended_clubs,
-        saved_rso=saved,         # ⭐ pass saved clubs to template
+        saved_rso=saved,
         user_query=user_input
     )
 
@@ -151,6 +170,7 @@ def get_recommendations():
 
 @app.route("/save_rso", methods=["POST"])
 def save_rso():
+    # Get starred RSOs from form
     starred = request.form.get("selected", "[]")
     new_selected = json.loads(starred)
 
@@ -160,8 +180,10 @@ def save_rso():
     if not username:
         return redirect(url_for("login"))
 
+    # Existing saved RSOs
     saved = users[username].get("saved_rso", [])
 
+    # Merge new RSOs without duplicates
     for rso in new_selected:
         if rso not in saved:
             saved.append(rso)
@@ -172,7 +194,7 @@ def save_rso():
     return redirect(url_for("profile"))
 
 
-# ----------------- DELETE RSO (PERSISTENT) -----------------
+# ----------------- DELETE AN RSO -----------------
 
 @app.route("/delete_rso", methods=["POST"])
 def delete_rso():
@@ -182,6 +204,8 @@ def delete_rso():
     username = session.get("username")
 
     saved = users[username].get("saved_rso", [])
+
+    # Remove from saved list
     if rso_name in saved:
         saved.remove(rso_name)
 
@@ -192,7 +216,7 @@ def delete_rso():
     return redirect(url_for("profile"))
 
 
-# ----------------- PROFILE -----------------
+# ----------------- PROFILE PAGE -----------------
 
 @app.route("/profile")
 def profile():
@@ -215,6 +239,7 @@ def profile():
 
 @app.route("/logout")
 def logout():
+    # Clear session data and redirect
     session.clear()
     flash("You have been logged out.", "success")
     return redirect(url_for("home"))
