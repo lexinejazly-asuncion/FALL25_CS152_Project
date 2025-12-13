@@ -46,7 +46,26 @@
         <div class="rso-list">
             {% if saved_rso %}
                 {% for rso in saved_rso %}
-                    <div class="rso-item">{{ rso }}</div>
+                    <div class="rso-item" style="display:flex; justify-content:space-between; align-items:center;">
+                        <span>{{ rso }}</span>
+
+                        <!-- Delete button -->
+                        <form action="/delete_rso" method="POST" style="margin:0;">
+                            <input type="hidden" name="rso_name" value="{{ rso }}">
+                            <button type="submit" 
+                                style="
+                                    background-color:red; 
+                                    color:white; 
+                                    border:none;
+                                    padding:6px 12px; 
+                                    border-radius:5px;
+                                    cursor:pointer;
+                                    font-size:14px;
+                                ">
+                                Remove
+                            </button>
+                        </form>
+                    </div>
                 {% endfor %}
             {% else %}
                 <p>No RSOs saved yet.</p>

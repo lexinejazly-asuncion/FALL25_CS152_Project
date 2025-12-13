@@ -1,6 +1,13 @@
 {
     "smriti.jha@sjsu.edu": {
         "first_name": "Smriti",
-        "password_hash": "scrypt:32768:8:1$Pl0pHG8M30Q2wQvY$ee364352b90fe11f54380ea9a4a598e77ab8050a0dca2c10685f883f4597430c17090958537c308821f7ea2367a047e42d03128e36b10d1606003c492ff93652"
+        "password_hash": "scrypt:32768:8:1$Pl0pHG8M30Q2wQvY$ee364352b90fe11f54380ea9a4a598e77ab8050a0dca2c10685f883f4597430c17090958537c308821f7ea2367a047e42d03128e36b10d1606003c492ff93652",
+        "saved_rso": [
+            "SJSU Homecoming 2025",
+            "Spartan Recreation",
+            "Sigma Nu",
+            "LILAC (Lucas College of Business Interorganizational Leadership Advancement Committee)",
+            "Sikh Collegiate Federation (Formerly known as Jakara Movement Chapter)"
+        ]
     }
 }

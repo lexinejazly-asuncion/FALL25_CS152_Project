@@ -43,12 +43,16 @@
         <!-- List of Recommendations -->
         <div class="list">
         {% for club_name in recommended_clubs %}
-        <div class="rso-item" data-name="{{ club_name }}">
-            <span class="name">{{ club_name }}</span> 
-            <svg class="star" viewBox="0 0 24 24">
-                <path d="M12 .587l3.668 7.568L24 9.748l-6 5.848L19.335 24 12 19.897 4.665 24 6 15.596 0 9.748l8.332-1.593z"/>
+            <div class="rso-item" data-name="{{ club_name }}">
+                <span class="name">{{ club_name }}</span>
+
+                <!-- Auto-star if previously saved -->
+                <svg class="star {% if club_name in saved_rso %}active{% endif %}" 
+                     viewBox="0 0 24 24">
+                    <path d="M12 .587l3.668 7.568L24 9.748l-6 5.848L19.335 24 
+                             12 19.897 4.665 24 6 15.596 0 9.748l8.332-1.593z"/>
                 </svg>
-        </div>
+            </div>
         {% endfor %}
         </div>
 
@@ -62,14 +66,14 @@
 </main>
 
 <script>
-    // toggle star icon
+    // Toggle star icon on click
     document.querySelectorAll('.star').forEach(star => {
         star.addEventListener('click', () => {
             star.classList.toggle('active');
         });
     });
 
-    // Before submitting form, save starred RSOs
+    // Save starred RSOs before form submit
     document.getElementById("saveForm").addEventListener("submit", () => {
         const selectedNames = [];
 

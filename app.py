@@ -62,7 +62,6 @@ def signup_user():
     username = request.form.get("username", "").strip()
     password = request.form.get("password", "")
 
-    # must be SJSU email
     if not username.endswith("@sjsu.edu"):
         flash("Please use your SJSU email (@sjsu.edu).")
         return redirect(url_for('signup'))
@@ -73,15 +72,14 @@ def signup_user():
 
     users = load_users()
 
-    # prevent duplicate
     if username in users:
         flash("An account with this email already exists.")
         return redirect(url_for('signup'))
 
-    # save user
     users[username] = {
         "first_name": first_name,
-        "password_hash": generate_password_hash(password)
+        "password_hash": generate_password_hash(password),
+        "saved_rso": []   # ⭐ initialize saved clubs list
     }
     save_users(users)
 
@@ -107,11 +105,10 @@ def login_user():
         flash("Incorrect password.")
         return redirect(url_for('login'))
 
-    # start session
     session["username"] = username
     session["first_name"] = user["first_name"]
 
-    return redirect(url_for('form'))  # take user to form after login
+    return redirect(url_for('form'))
 
 
 # ----------------- PROTECTED FORM -----------------
@@ -125,35 +122,73 @@ def form():
 
 
 # ----------------- RECOMMENDATIONS -----------------
-
 @app.route('/recommendation', methods=['POST'])
 def get_recommendations():
-    if request.method == 'POST':
-        user_input = request.form.get('user_input', '').strip()
+    user_input = request.form.get('user_input', '').strip()
 
-        N_CLUBS = 15
-        recommended_clubs = recommend(
-            user_input=user_input,
-            loaded_models=loaded_models,
-            n=N_CLUBS
-        )
+    N_CLUBS = 15
+    recommended_clubs = recommend(
+        user_input=user_input,
+        loaded_models=loaded_models,
+        n=N_CLUBS
+    )
 
-        return render_template(
-            'recommendation.html',
-            recommended_clubs=recommended_clubs,
-            user_query=user_input
-        )
-    
-    return redirect(url_for('home'))
+    # Load saved RSOs for this user
+    users = load_users()
+    saved = []
+    if session.get("username"):
+        saved = users[session["username"]].get("saved_rso", [])
+
+    return render_template(
+        'recommendation.html',
+        recommended_clubs=recommended_clubs,
+        saved_rso=saved,         # ⭐ pass saved clubs to template
+        user_query=user_input
+    )
 
 
-# ----------------- SAVE RSOs -----------------
+# ----------------- SAVE RSOs (PERSISTENT) -----------------
 
 @app.route("/save_rso", methods=["POST"])
 def save_rso():
     starred = request.form.get("selected", "[]")
-    selected = json.loads(starred)
-    session["saved_rso"] = selected
+    new_selected = json.loads(starred)
+
+    users = load_users()
+    username = session.get("username")
+
+    if not username:
+        return redirect(url_for("login"))
+
+    saved = users[username].get("saved_rso", [])
+
+    for rso in new_selected:
+        if rso not in saved:
+            saved.append(rso)
+
+    users[username]["saved_rso"] = saved
+    save_users(users)
+
+    return redirect(url_for("profile"))
+
+
+# ----------------- DELETE RSO (PERSISTENT) -----------------
+
+@app.route("/delete_rso", methods=["POST"])
+def delete_rso():
+    rso_name = request.form.get("rso_name", "")
+
+    users = load_users()
+    username = session.get("username")
+
+    saved = users[username].get("saved_rso", [])
+    if rso_name in saved:
+        saved.remove(rso_name)
+
+    users[username]["saved_rso"] = saved
+    save_users(users)
+
+    flash(f"{rso_name} removed from your saved list.")
     return redirect(url_for("profile"))
 
 
@@ -163,9 +198,10 @@ def save_rso():
 def profile():
     if "username" not in session:
         flash("Please sign in first.")
-        return redirect(url_for("login"))
+        return redirect(url_for('login'))
 
-    saved = session.get("saved_rso", [])
+    users = load_users()
+    saved = users[session["username"]].get("saved_rso", [])
 
     return render_template(
         "profile.html",
