@@ -8,9 +8,29 @@
 
 <body>
 
+<!-- SHOW NAVBAR ONLY WHEN USER IS SIGNED IN -->
+{% if session.get('username') %}
+<nav class="navbar">
+  <div class="nav-left">FindYourRSO</div>
+
+  <div class="nav-right">
+    <a href="/profile">Profile</a>
+    <a href="/form">Find Clubs</a>
+    <a href="/logout">Logout</a>
+  </div>
+</nav>
+
+<style>
+    body { padding-top: 90px; } /* Prevents overlap */
+</style>
+{% endif %}
+
+<!-- ORIGINAL HEADER ONLY IF USER IS NOT LOGGED IN -->
+{% if not session.get('username') %}
 <header>
     <h1>FindYourRSO</h1>
 </header>
+{% endif %}
 
 <main>
     <div class="card">
@@ -31,7 +51,6 @@
         </form>
 
     </div>
-       
 </main>
 
 </body>

@@ -7,27 +7,52 @@
 
   <body>
   <h1>FindYourRSO</h1>
+
     <div class="Box">
       <h2>Sign Up <br></h2>
 
-      <div class="Sign-In-Container">
-        <p>
-          First Name <br>
-          <input type="text"><br><br>
-          Email<br>
-          <input type="text"><br><br>
-          Password<br>
-          <input type="password"><br>
-        </p>
-      </div>
+      <!-- ⭐ FLASH MESSAGES -->
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div style="color:red; font-size:16px; margin-bottom:15px;">
+            {% for msg in messages %}
+              {{ msg }}<br>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
 
+      <!-- REAL form that submits to Flask -->
+      <form action="/signup" method="POST">
+
+        <div class="Sign-In-Container">
+          <p>
+            First Name <br>
+            <input type="text" name="first_name" required><br><br>
+
+            SJSU Email<br>
+            <input type="email" name="username" required><br><br>
+
+            Password<br>
+            <input type="password" name="password" required><br>
+          </p>
+        </div>
+
+        <div class="Button-Container">
+          <button type="submit" class="button" style="border:none; cursor:pointer;">
+            Sign Up!
+          </button>
+        </div>
+
+      </form>
+
+      <!-- ⭐ BACK TO SIGN IN BUTTON -->
       <div class="Button-Container">
-        <a href="login.html" class="button">Sign Up!</a>
+        <a href="/login.html" class="button">
+          Back to Sign In
+        </a>
       </div>
 
-    <!--<div class="Sign-Up"
-      <a href="login.html" class="signup">Or Sign In Here!</a>
-      </div>-->
     </div>
   </body>
 </html>

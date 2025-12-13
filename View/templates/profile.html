@@ -9,21 +9,41 @@
 
 <body>
 
+<!-- SHOW NAVBAR ONLY WHEN USER IS SIGNED IN -->
+{% if session.get('username') %}
+<nav class="navbar">
+  <div class="nav-left">FindYourRSO</div>
+
+  <div class="nav-right">
+    <a href="/profile">Profile</a>
+    <a href="/form">Find Clubs</a>
+    <a href="/logout">Logout</a>
+  </div>
+</nav>
+
+<!-- Prevent content from hiding behind navbar -->
+<style>
+    body { padding-top: 90px; }
+</style>
+{% endif %}
+
+<!-- SHOW ORIGINAL HEADER ONLY FOR NON-LOGGED-IN VIEWERS -->
+{% if not session.get('username') %}
 <header>
     <h1 class="logo">FindYourRSO</h1>
 </header>
+{% endif %}
 
 <main>
     <h2 class="greeting">FoundYourRSOs</h2>
 
     <div class="profile-card">
 
-        <p class="section-subtitle">Here is a list of your recommended and saved clubs and organizations</p>
+        <p class="section-subtitle">
+            Here is a list of your recommended and saved clubs and organizations
+        </p>
 
         <div class="rso-list">
-
-            <!-- List of saved rsos, iterates through the list of saved/starred from recommendations -->
-            <div class="rso-list">
             {% if saved_rso %}
                 {% for rso in saved_rso %}
                     <div class="rso-item">{{ rso }}</div>
@@ -31,8 +51,6 @@
             {% else %}
                 <p>No RSOs saved yet.</p>
             {% endif %}
-        </div>
-
         </div>
 
     </div>

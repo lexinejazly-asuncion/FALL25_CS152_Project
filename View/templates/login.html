@@ -7,25 +7,37 @@
 
   <body>
   <h1>FindYourRSO</h1>
+
     <div class="Box">
       <h2>Sign In <br></h2>
 
-      <div class="Sign-In-Container">
-        <p>
-          Email<br>
-          <input type="text"><br><br>
-          Password<br>
-          <input type="password"><br>
-        </p>
-      </div>
+      <form action="/login" method="POST">
+        <div class="Sign-In-Container">
+          <p>
+            SJSU Email<br>
+            <input type="email" name="username" required><br><br>
 
+            Password<br>
+            <input type="password" name="password" required><br>
+          </p>
+        </div>
+
+        <!-- Sign In button -->
+        <div class="Button-Container">
+          <button type="submit" class="button" style="border:none; cursor:pointer;">
+            Sign In
+          </button>
+        </div>
+
+      </form>
+
+      <!-- ⭐ NEW Create Account Button (same style as purple button) -->
       <div class="Button-Container">
-        <a href="/form" class="button">Sign In</a>
+        <a href="/signup.html" class="button">
+          Create Account
+        </a>
       </div>
 
-      <div class="Sign-Up">
-      <a href="/signup.html" class="signup">Or Sign Up Here!</a>
-      </div>
     </div>
   </body>
 </html>

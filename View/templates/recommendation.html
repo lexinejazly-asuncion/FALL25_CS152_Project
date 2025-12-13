@@ -4,14 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recommendations</title>
+
+    <!-- Load global styling (includes NAVBAR styles) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+
+    <!-- Page-specific styling -->
     <link rel="stylesheet" href="{{ url_for('static', filename='recommendation.css') }}">
 </head>
 
 <body>
 
-<header>
-    <h1>FindYourRSO</h1>
-</header>
+<!-- ⭐ NAVBAR ALWAYS SHOWN ON THIS PAGE -->
+<nav class="navbar">
+  <div class="nav-left">FindYourRSO</div>
+
+  <div class="nav-right">
+    <a href="/profile">Profile</a>
+    <a href="/form">Find Clubs</a>
+    <a href="/logout">Logout</a>
+  </div>
+</nav>
+
+<!-- ⭐ Perfect spacing under navbar -->
+<style>
+    body { padding-top: 110px; }
+</style>
 
 <main>
     <div class="rec-card">
@@ -24,21 +41,19 @@
         </p>
 
         <!-- List of Recommendations -->
-        <!-- Iterates through the list of recommendations -->
         <div class="list">
         {% for club_name in recommended_clubs %}
         <div class="rso-item" data-name="{{ club_name }}">
             <span class="name">{{ club_name }}</span> 
             <svg class="star" viewBox="0 0 24 24">
                 <path d="M12 .587l3.668 7.568L24 9.748l-6 5.848L19.335 24 12 19.897 4.665 24 6 15.596 0 9.748l8.332-1.593z"/>
-            </svg>
+                </svg>
         </div>
         {% endfor %}
         </div>
 
-
-        <!-- Button to go to profile -->
-       <form id="saveForm" action="/save_rso" method="POST">
+        <!-- Submit starred clubs -->
+        <form id="saveForm" action="/save_rso" method="POST">
             <input type="hidden" name="selected" id="selected-input">
             <button type="submit" class="button">Go to Profile</button>
         </form>
@@ -54,8 +69,8 @@
         });
     });
 
-     // Before submitting form, save the starred RSOs
-    document.getElementById("saveForm").addEventListener("submit", (e) => {
+    // Before submitting form, save starred RSOs
+    document.getElementById("saveForm").addEventListener("submit", () => {
         const selectedNames = [];
 
         document.querySelectorAll(".rso-item").forEach(item => {
@@ -65,8 +80,8 @@
             }
         });
 
-        // Convert into a JSON string
-        document.getElementById("selected-input").value = JSON.stringify(selectedNames);
+        document.getElementById("selected-input").value =
+            JSON.stringify(selectedNames);
     });
 </script>
 
